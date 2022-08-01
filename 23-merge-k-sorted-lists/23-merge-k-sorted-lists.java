@@ -10,13 +10,21 @@
  */
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        ListNode ll=null;
-        for(ListNode list :lists){
-            ll=mergeTwoLists(ll,list);
-        }
-        return ll;
+        
+        return mergeKLists_1(lists,0,lists.length-1);
     }
-    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+    
+    
+    public ListNode mergeKLists_1(ListNode[] lists,int si,int ei) {
+        if(lists.length==0)return null;
+        if(si==ei)
+            return lists[si];
+        int mid =(si+ei)/2;
+        return mergeTwoLists(mergeKLists_1(lists,si,mid),mergeKLists_1(lists,mid+1,ei));
+    }
+    
+    //////////
+      public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         if(list1==null||list2==null)
             return list1!=null ? list1 :list2;
         ListNode dummy =new ListNode(-1);
@@ -34,4 +42,15 @@ class Solution {
         prev.next =c1!=null ?c1:c2;
         return dummy.next;
     }
+    ////////////
+    // public ListNode tail(ListNode head){
+    //     if(head==null || head.next==null){
+    //         return head;
+    //     }
+    //     ListNode cur=head;
+    //     while(cur.next!=null){
+    //         cur=cur.next;
+    //     }
+    //     return cur;
+    // }
 }
