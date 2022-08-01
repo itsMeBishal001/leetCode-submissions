@@ -10,21 +10,32 @@
  */
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-        
-        return mergeKLists_1(lists,0,lists.length-1);
+         if (lists.length == 0)
+            return null;
+
+        ListNode dummy = new ListNode(-1);
+        ListNode prev = dummy;
+        for (int i = 0; i < lists.length; i++) {
+            ListNode tail = getTail(lists[i]);
+            if (tail != null) {
+                prev.next = lists[i];
+                prev = tail;
+            }
+        }
+
+        return mergeSort(dummy.next);
     }
-    
-    
-    public ListNode mergeKLists_1(ListNode[] lists,int si,int ei) {
-        if(lists.length==0)return null;
-        if(si==ei)
-            return lists[si];
-        int mid =(si+ei)/2;
-        return mergeTwoLists(mergeKLists_1(lists,si,mid),mergeKLists_1(lists,mid+1,ei));
+    public   ListNode mergeSort(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
+
+        ListNode mid = middleNode(head);
+        ListNode nHead = mid.next;
+        mid.next = null;
+
+        return mergeTwoLists(mergeSort(head), mergeSort(nHead));
     }
-    
-    //////////
-      public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
         if(list1==null||list2==null)
             return list1!=null ? list1 :list2;
         ListNode dummy =new ListNode(-1);
@@ -42,15 +53,26 @@ class Solution {
         prev.next =c1!=null ?c1:c2;
         return dummy.next;
     }
-    ////////////
-    // public ListNode tail(ListNode head){
-    //     if(head==null || head.next==null){
-    //         return head;
-    //     }
-    //     ListNode cur=head;
-    //     while(cur.next!=null){
-    //         cur=cur.next;
-    //     }
-    //     return cur;
-    // }
+     public ListNode getTail(ListNode head) {
+        if (head == null || head.next == null)
+            return head;
+
+        ListNode curr = head;
+        while (curr.next != null)
+            curr = curr.next;
+
+        return curr;
+    }
+    
+    public ListNode middleNode(ListNode head) {
+      if(head==null||head.next==null)return head;
+        ListNode slow=head,fast=head;
+        while(fast.next!=null&& fast.next.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+        }
+        return slow;
+    }
+
+     
 }
