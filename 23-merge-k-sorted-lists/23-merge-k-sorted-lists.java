@@ -10,36 +10,28 @@
  */
 class Solution {
     public ListNode mergeKLists(ListNode[] lists) {
-         ListNode res = null;
-        for (ListNode list : lists) {
-            res = mergeTwoLists(res, list);
+        ListNode ll=null;
+        for(ListNode list :lists){
+            ll=mergeTwoLists(ll,list);
         }
-
-        return res;
+        return ll;
     }
-    
-     public  ListNode mergeTwoLists(ListNode l1, ListNode l2) {
-        if (l1 == null || l2 == null)
-            return l1 != null ? l1 : l2;
-
-        ListNode dummy = new ListNode(-1);
-        ListNode prev = dummy, c1 = l1, c2 = l2;
-
-        while (c1 != null && c2 != null) {
-            if (c1.val <= c2.val) {
-                prev.next = c1;
-                c1 = c1.next;
-            } else {
-                prev.next = c2;
-                c2 = c2.next;
+    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        if(list1==null||list2==null)
+            return list1!=null ? list1 :list2;
+        ListNode dummy =new ListNode(-1);
+        ListNode prev=dummy,c1=list1,c2=list2;
+        while(c1!=null && c2!=null){
+            if(c1.val<=c2.val){
+                prev.next=c1;
+                c1=c1.next;
+            }else{
+                prev.next=c2;
+                c2=c2.next;
             }
-            prev = prev.next;
+            prev=prev.next;
         }
-
-        prev.next = c1 != null ? c1 : c2;
-        ListNode head = dummy.next;
-        dummy.next = null; // delete dummy;
-        return head;
+        prev.next =c1!=null ?c1:c2;
+        return dummy.next;
     }
-
 }
