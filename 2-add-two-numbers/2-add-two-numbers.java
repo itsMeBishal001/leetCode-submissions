@@ -56,20 +56,5 @@ class Solution {
         return (dummy.next);
     }
     
-    ListNode reverse(ListNode head) {
-        if (head == null || head.next == null)
-            return head;
-
-        ListNode prev = null, curr = head;
-        while (curr != null) {
-            ListNode forw = curr.next; // backup
-
-            curr.next = prev; // link
-
-            prev = curr; // move
-            curr = forw;
-        }
-
-        return prev;
-    }
+   
 }
