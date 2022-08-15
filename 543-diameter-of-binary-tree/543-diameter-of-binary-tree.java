@@ -14,25 +14,37 @@
  * }
  */
 class Solution {
-     public int height(TreeNode node) {
-    // write your code here
-    if(node == null)
-        return -1;
-    int lh = height(node.left);
-    int rh = height(node.right);
+    public class pair{
+        int h;
+        int d;
+        
+        pair(){};
+        pair(int h, int d){
+            this.h = h;
+            this.d = d;
+        }
+    }
     
-    return Math.max(lh, rh) + 1;
+    public pair diameter(TreeNode node){
+        if(node == null){
+            return new pair(-1, 0);
+        }
+        
+        
+        pair la = diameter(node.left);
+        pair ra = diameter(node.right);
+        
+        pair my = new pair();
+        
+        my.h = Math.max(la.h , ra.h ) + 1;
+        int accrossNode = la.h + ra.h + 2; 
+        my.d = Math.max(accrossNode, Math.max(la.d, ra.d));
+        
+        return my;
+    }
     
-    
-  }
     public int diameterOfBinaryTree(TreeNode root) {
-        if(root==null)
-            return 0 ;
-        
-        int ld=diameterOfBinaryTree(root.left);
-        int rd=diameterOfBinaryTree(root.right);
-        int n=height(root.left)+height(root.right)+2;
-        return Math.max(n,Math.max(ld,rd));
-        
+        pair ans = diameter(root);
+        return ans.d;
     }
 }
