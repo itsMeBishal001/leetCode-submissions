@@ -28,7 +28,7 @@ class Solution {
         return root;
     }
     
-    private void inorder(TreeNode root, ArrayList<Integer> al){
+    public void inorder(TreeNode root, ArrayList<Integer> al){
         if(root == null) return;
         inorder(root.left, al);
         al.add(root.val);
