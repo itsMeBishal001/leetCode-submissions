@@ -21,7 +21,7 @@ class Solution {
         return buildTree(al);
     }
     
-    private TreeNode buildTree(ArrayList<Integer> al){
+    public TreeNode buildTree(ArrayList<Integer> al){
         if(al.size() == 0) return null;
         TreeNode root = new TreeNode(al.remove(0));
         root.right = buildTree(al);
