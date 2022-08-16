@@ -15,6 +15,10 @@
  */
 class Solution {
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {
+        if(root1==null && root2==null || root1==null || root2==null)
+        {
+            return false;
+        }
          List<Integer> leafs1=leafs(root1);
         List<Integer> leafs2=leafs(root2);
         return leafs1.equals(leafs2);
