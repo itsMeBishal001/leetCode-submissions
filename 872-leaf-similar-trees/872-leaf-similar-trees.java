@@ -15,32 +15,18 @@
  */
 class Solution {
     public boolean leafSimilar(TreeNode root1, TreeNode root2) {
-        if(root1==null && root2==null || root1==null || root2==null)
-        {
-            return false;
-        }
-         List<Integer> leafs1=leafs(root1);
-        List<Integer> leafs2=leafs(root2);
-        return leafs1.equals(leafs2);
+        Stack<TreeNode> s1 = new Stack<>(), s2 = new Stack<>();
+        s1.push(root1); s2.push(root2);
+        while (!s1.empty() && !s2.empty())
+            if (dfs(s1) != dfs(s2)) return false;
+        return s1.empty() && s2.empty();
     }
-    
-    public List<Integer>  leafs(TreeNode root){
-        
-         if(root==null)return new ArrayList<>();
-        List<Integer> ans=new ArrayList<>();
-        
-       if(root.left==null&&root.right==null) ans.add(root.val);
-        List <Integer> left=leafs(root.left);
-                if(left.size()>0){
-                for(Integer x :left)
-                ans.add(x);
-             }
-        List<Integer>  right=leafs(root.right);
-        if(right.size()>0){
-        for(Integer x :right)
-            ans.add(x);
-        
+
+    public int dfs(Stack<TreeNode> s) {
+        while (true) {
+            TreeNode node = s.pop();
+            if (node.right != null) s.push(node.right);
+            if (node.left != null) s.push(node.left);
+            if (node.left == null && node.right == null) return node.val;
         }
-        return ans;
-    }
-}
+}}
