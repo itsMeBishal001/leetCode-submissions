@@ -14,19 +14,42 @@
  * }
  */
 class Solution {
-    long prev=Long.MIN_VALUE;
     public boolean isValidBST(TreeNode root) {
-        if(root==null)
-            return true;
-        boolean la=isValidBST(root.left);
-         if(la == false)
-            return false;
-        if(prev>=root.val)
-            return false;
-        prev=root.val;
-        boolean ra=isValidBST(root.right);
-        if(ra == false)
-            return false;
+       return morisTraversalInOrder(root);
+    }
+    
+    public boolean morisTraversalInOrder(TreeNode root){
+       // List<Integer> ans=new ArrayList<>();
+        TreeNode curr=root;
+        long prev=-(long)1e13;
+        while(curr!=null){
+            TreeNode left=curr.left;
+            if(left==null){
+                if(prev>=curr.val )return false;
+                    prev=curr.val;
+                // ans.add(curr.val);
+            
+                curr=curr.right;
+            }else{
+                TreeNode RMostNode=rightMostNode(left,curr);
+                if(RMostNode.right==null){
+                    RMostNode.right=curr;
+                    curr=curr.left;
+                }else{
+                    RMostNode.right=null;
+                    if(prev>=curr.val )return false;
+                    prev=curr.val;
+                    curr=curr.right;
+                }
+            }
+        }
         return true;
+    }
+    
+    public TreeNode rightMostNode(TreeNode node,TreeNode curr){
+        while(node.right!=null&&node.right!=curr){
+            node=node.right;
+        }
+        return node;
     }
 }
