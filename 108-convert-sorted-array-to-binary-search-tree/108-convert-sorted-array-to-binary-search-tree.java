@@ -15,17 +15,18 @@
  */
 class Solution {
     public TreeNode sortedArrayToBST(int[] nums) {
-        return constractBST(nums,0,nums.length-1);
+        return inOrder(nums,0,nums.length-1);
     }
-    
-    public TreeNode constractBST (int[] nums,int low,int high){
-        if(low>high){
-       return null;            
-        }
-        int mid=(low+high)/2;
-        TreeNode root=new TreeNode(nums[mid]);
-        root.left=constractBST(nums,low,mid-1);
-        root.right=constractBST(nums,mid+1,high);
+    public TreeNode inOrder(int[]arr,int si,int ei){
+        if(si>ei)return null;
+         int mid=(si+ei)/2;
+            TreeNode root=new TreeNode(arr[mid]);
+        
+           
+            root.left=inOrder(arr,si,mid-1);
+            root.right=inOrder(arr,mid+1,ei);
+            
+        
         return root;
     }
 }
