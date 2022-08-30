@@ -14,34 +14,31 @@
  * }
  */
 class Solution {
-    public boolean isBalanced(TreeNode root) {
-        if(root==null||(root.left==null&&root.right==null))return true;
-        
-        //for left child
-       // boolean left=isBalanced(root.left);
-        if(!isBalanced(root.left))return false;
-        
-        //for right child
-        // boolean right=isBalanced(root.right);
-        if(!isBalanced(root.right))return false;
-        
-        //for root
-        int lH=height(root.left);
-        int rH=height(root.right);
-        if(lH+1==rH||lH==rH+1||lH==rH)return true;
-        return false;
+    public class BTpair{
+        boolean isBal=true;
+        int h= -1;
     }
-    
-    //height of the function
-     public  int height(TreeNode root){
-        if(root == null){
-            return -1;
+    public BTpair isBalanceds(TreeNode root) {
+        
+        if(root==null)return new BTpair();
+        BTpair lp=isBalanceds(root.left);
+         BTpair rp=isBalanceds(root.right);
+        
+        BTpair myPair=new BTpair();
+         myPair.isBal=lp.isBal&& rp.isBal;
+        if(myPair.isBal&&(Math.abs(lp.h-rp.h)<2)){
+            myPair.h=Math.max(lp.h,rp.h)+1;
+            //myPair.isBal=true;
+          
+        }else{
+            myPair.isBal=false;
         }
-        int lh = height(root.left);
-        int rh = height(root.right);
-
-        int myAns = Math.max(lh, rh) + 1;
-        return myAns;
+        return myPair;
     }
-    
+
+    public boolean isBalanced(TreeNode root) {
+      //  BTpair myPair=isBalanceds(root);
+        
+        return isBalanceds(root).isBal;
+    }
 }
